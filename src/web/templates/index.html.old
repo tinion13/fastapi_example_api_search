@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Tickets Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <div class="left">
+            <span class="title"><b>Tickets Search</b> - поиск авиабилетов и отетей</span>
+            <span class="headers">Тестовый проект</span>
+            <div class="current_data-container">
+                 <div class="headers_with_reset-container">
+                    <span class="headers">Авиабилеты</span>
+                    <button class="reset-tickets" title="Сброс данных авиабилетов">⟳</button>
+                 </div>
+                <div class="current_data-tickets">
+                    <div class="para_name-value">
+                        <span><b>Город вылета:</b></span>
+                        <span id="tickets_origin"></span>
+                    </div>
+                    <div class="para_name-value">
+                        <span><b>Город посадки:</b></span>
+                        <span id="tickets_destination"></span>
+                    </div>
+                    <div class="para_name-value">
+                        <span><b>Дата вылета:</b></span>
+                        <span id="tickets_departure_at"></span>
+                    </div>
+                    <div class="para_name-value">
+                        <span>Дата возврата:</span>
+                        <span id="tickets_return_at"></span>
+                    </div>
+                    <div class="para_name-value">
+                        <span>Прямой ли маршрут:</span>
+                        <span id="tickets_direct"></span>
+                    </div>
+                </div>
+                <div class="headers_with_reset-container">
+                    <span class="headers">Отели</span>
+                    <button class="reset-hotels" title="Сброс данных отелей">⟳</button>
+                 </div>
+                <div class="current_data-hotels">
+                    <div class="para_name-value">
+                        <span><b>Город:</b></span>
+                        <span id="hotels_location"></span>
+                    </div>
+                    <div class="para_name-value">
+                        <span><b>Дата заселения:</b></span>
+                        <span id="hotels_checkIn"></span>
+                    </div>
+                    <div class="para_name-value">
+                        <span><b>Дата выселения:</b></span>
+                        <span id="hotels_checkOut"></span>
+                    </div>
+                    <div class="para_name-value">
+                        <span>Количество взрослых:</span>
+                        <span id="hotels_adults"></span>
+                    </div>
+                    <div class="para_name-value">
+                        <span>Количество детей:</span>
+                        <span id="hotels_children"></span>
+                    </div>
+                    <div class="para_name-value">
+                        <span>Количество звезд:</span>
+                        <span id="hotels_stars"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-area"></div>
+            <div class="input-area">
+                <input type="text" placeholder="Ваш запрос...">
+                <button class="search">Поиск</button>
+            </div>
+        </div>
+
+        <div class="right">
+                <div class="emoji_header-container">
+                    <span id="emoji-hotels" class="emoji">🏨</span>
+                    <span id="emoji-tickets" class="emoji">🛫</span>
+                    <span id="emoji-trains" class="emoji">🚆</span>
+                </div>
+                <div class="finded-container"></div>
+        </div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+</html>

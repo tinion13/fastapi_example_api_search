@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Tickets Search</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+<body>
+    <div class="page">
+        <header class="page-header">
+            <span class="title"><b>Tickets Search</b> — поиск авиабилетов и отелей</span>
+            <span class="headers">Тестовый проект</span>
+        </header>
+
+        <section class="form-section">
+            <div class="emoji_header-container">
+                <button type="button" id="show-tickets" class="emoji">🛫 Авиабилеты</button>
+                <button type="button" id="show-hotels" class="emoji">🏠 Отели</button>
+            </div>
+
+            <form id="tickets-form" class="form-card">
+                <div class="headers_with_reset-container">
+                    <span class="headers">Авиабилеты</span>
+                    <button type="reset" class="reset-tickets" title="Сброс данных авиабилетов">⟳</button>
+                </div>
+
+                <div class="para_name-value">
+                    <label for="origin"><b>Город вылета:</b></label>
+                    <input type="text" id="origin" name="origin">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="destination"><b>Город посадки:</b></label>
+                    <input type="text" id="destination" name="destination">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="departure_at"><b>Дата вылета:</b></label>
+                    <input type="date" id="departure_at" name="departure_at">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="return_at">Дата возврата:</label>
+                    <input type="date" id="return_at" name="return_at">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="direct">Прямой ли маршрут:</label>
+                    <input type="checkbox" id="direct" name="direct">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="tickets_page">Страница:</label>
+                    <input type="number" id="tickets_page" name="page" value="1" min="1">
+                </div>
+
+                <button type="submit">Найти</button>
+            </form>
+
+            <form id="hotels-form" class="form-card" style="display: none;">
+                <div class="headers_with_reset-container">
+                    <span class="headers">Отели</span>
+                    <button type="reset" class="reset-hotels" title="Сброс данных отелей">⟳</button>
+                </div>
+
+                <div class="para_name-value">
+                    <label for="location"><b>Город:</b></label>
+                    <input type="text" id="location" name="location">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="check_in"><b>Дата заселения:</b></label>
+                    <input type="date" id="check_in" name="check_in">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="check_out"><b>Дата выселения:</b></label>
+                    <input type="date" id="check_out" name="check_out">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="adults">Количество взрослых:</label>
+                    <input type="number" id="adults" name="adults" min="1">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="children">Количество детей:</label>
+                    <input type="number" id="children" name="children" min="0">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="stars">Количество звезд:</label>
+                    <input type="number" id="stars" name="stars" min="1" max="5">
+                </div>
+
+                <div class="para_name-value">
+                    <label for="hotels_page">Страница:</label>
+                    <input type="number" id="hotels_page" name="page" value="1" min="1">
+                </div>
+
+                <button type="submit">Найти</button>
+            </form>
+        </section>
+
+        <section class="results-section">
+            <div class="finded-container">Здесь появятся результаты</div>
+        </section>
+    </div>
+
+    <script>
+        const ticketsForm = document.getElementById('tickets-form');
+        const hotelsForm = document.getElementById('hotels-form');
+        const resultsContainer = document.querySelector('.finded-container');
+
+        document.getElementById('show-tickets').addEventListener('click', () => {
+            ticketsForm.style.display = 'block';
+            hotelsForm.style.display = 'none';
+        });
+
+        document.getElementById('show-hotels').addEventListener('click', () => {
+            ticketsForm.style.display = 'none';
+            hotelsForm.style.display = 'block';
+        });
+
+        ticketsForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const payload = {
+                origin: document.getElementById('origin').value || null,
+                destination: document.getElementById('destination').value || null,
+                departure_at: document.getElementById('departure_at').value || null,
+                return_at: document.getElementById('return_at').value || null,
+                direct: document.getElementById('direct').checked,
+                page: Number(document.getElementById('tickets_page').value || 1)
+            };
+
+            try {
+                const response = await fetch('/api/avia_tickets', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                resultsContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                resultsContainer.textContent = 'Ошибка при получении данных';
+            }
+        });
+
+        hotelsForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const payload = {
+                location: document.getElementById('location').value || null,
+                adults: document.getElementById('adults').value || null,
+                check_in: document.getElementById('check_in').value || null,
+                check_out: document.getElementById('check_out').value || null,
+                stars: document.getElementById('stars').value || null,
+                children: document.getElementById('children').value || null,
+                page: Number(document.getElementById('hotels_page').value || 1)
+            };
+
+            try {
+                const response = await fetch('/api/hotels', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                resultsContainer.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch (error) {
+                resultsContainer.textContent = 'Ошибка при получении данных';
+            }
+        });
+    </script>
+</body>
+</html>
