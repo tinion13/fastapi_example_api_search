@@ -16,7 +16,8 @@ dependencies = [
 exclude = [
     ".venv_312",
     ".vscode",
-    "temp*",
+    "temp_*",
+    "test_*",
     "for_upgrade"
 ]
 src = ["src"]

@@ -46,7 +46,7 @@ class AviaTicketsService:
         for flight in flights:
             flight.price = f"{flight.price} RUB"
             flight.link = f"https://www.aviasales.ru{flight.link}"
-            flight.airline = self._data.at_aircompanies.get(flight.airline, flight.airline)
+            flight.airline = self._data.aircompanies.get(flight.airline, flight.airline)
             flight.departure_at = datetime.fromisoformat(flight.departure_at).strftime("%Y.%m.%d %H:%M")
             flight.return_at = datetime.fromisoformat(flight.return_at).strftime("%Y.%m.%d %H:%M")
 

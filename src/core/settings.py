@@ -6,6 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     TRAVELPAYOUTS_AVIASALES_TOKEN: SecretStr
+    OPENWEATHER_TOKEN: SecretStr
 
     model_config = SettingsConfigDict(
         env_prefix="",

@@ -2,6 +2,7 @@ import httpx
 from fastapi import Depends, Request
 
 from clients.avia_tickets import AviaTicketsClient
+from clients.weathers import WeathersClient
 from core.settings import Settings, get_settings
 
 
@@ -16,4 +17,13 @@ async def get_avia_tickets_client(
     return AviaTicketsClient(
         client=http_client,
         api_key=settings.TRAVELPAYOUTS_AVIASALES_TOKEN.get_secret_value()
+    )
+
+async def get_weathers_client(
+    http_client = Depends(get_http_client),
+    settings: Settings = Depends(get_settings)
+) -> WeathersClient:
+    return WeathersClient(
+        client=http_client,
+        api_key=settings.OPENWEATHER_TOKEN.get_secret_value()
     )

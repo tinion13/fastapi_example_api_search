@@ -11,7 +11,7 @@ from exceptions.avia_tickets import (
     AviaTicketsServiceBadResponseError,
     AviaTicketsServiceValidationError,
 )
-from schemas.avia_tickets import AviaTicketsSearchInput
+from schemas.avia_tickets import AviaTicketsSearchInput, list_flights_adapter
 from services.avia_tickets import AviaTicketsService
 
 log = logging.getLogger(__file__)
@@ -19,7 +19,7 @@ router = APIRouter()
 
 
 @router.post("/api/avia_tickets")
-async def get_avia_tickets(
+async def get_flights(
     _: Request,
     params: AviaTicketsSearchInput = Depends(get_avia_tickets_normalized),
     avia_tickets_service: AviaTicketsService = Depends(get_avia_tickets_service),
@@ -37,6 +37,6 @@ async def get_avia_tickets(
         raise HTTPException(status.HTTP_502_BAD_GATEWAY, "Bad provider answer") from ex
 
     return JSONResponse(
-        {"data": result},
+        {"data": list_flights_adapter.dump_json(result)},
         status.HTTP_200_OK
     )

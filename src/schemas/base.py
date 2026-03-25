@@ -1,10 +1,7 @@
 import re
 from datetime import date, datetime
 
-from pydantic import BeforeValidator
 from pydantic_core import core_schema
-
-EmptyToNone = BeforeValidator(lambda v: None if v in ("", "None") else v)
 
 DATE_DEFIS_RE = re.compile(r"^\d{4}-\d{2}(-\d{2})?$")
 
@@ -18,9 +15,6 @@ class DefisYearMonthOrDateOrNone(str):
 
     @classmethod
     def validate(cls, value):
-        if value in ("", "None", None):
-            return None
-
         if not isinstance(value, str):
             raise TypeError("must be a string or None")
 

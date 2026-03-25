@@ -1,17 +1,9 @@
-from fastapi import APIRouter, Depends, Request
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
+from fastapi import APIRouter
 
-from dependencies.common import get_templates
-from routers.avia_tickets import router as avia_tickets_router
+from routers.avia_tickets import router as avia_tickets
+from routers.home import router as home_page
 
 router = APIRouter()
-router.include_router(avia_tickets_router, tags=["avia_tickets"])
 
-
-@router.get("/", response_class=HTMLResponse)
-async def home(
-    request: Request,
-    templates: Jinja2Templates = Depends(get_templates),
-):
-    return templates.TemplateResponse("index.html", {"request": request, })
+router.include_router(home_page, tags=["home_page"])
+router.include_router(avia_tickets, tags=["avia_tickets"])

@@ -4,30 +4,30 @@ import logging
 import httpx
 
 from clients.base import BaseApiClient
-from exceptions.avia_tickets import AviaTicketsClientResponseError, AviaTicketsClientTransportError
-from schemas.avia_tickets import AviaTicketsSearchInput
+from exceptions.weathers import WeathersClientResponseError, WeathersClientTransportError
+from schemas.weathers import WeathersSearchInput
 
 log = logging.getLogger(__file__)
 
-class AviaTicketsClient(BaseApiClient):
+class WeathersClient(BaseApiClient):
     async def get_result(
         self,
-        params: AviaTicketsSearchInput,
+        params: WeathersSearchInput,
     ) -> dict:
-        url = "http://api.travelpayouts.com/aviasales/v3/prices_for_dates"
+        url = "https://api.openweathermap.org/data/2.5/forecast"
         headers = {'Accept-Encoding': 'gzip, deflate'}
         params_provider = params.model_dump(exclude_none=True)
-        params_provider["token"] = self._api_key
+        params_provider["appid"] = self._api_key
 
         try:
             response = await self._client.get(url, params=params_provider, headers=headers)
             response.raise_for_status()
             response = response.json()
         except httpx.HTTPStatusError as ex:
-            raise AviaTicketsClientResponseError(ex) from ex
+            raise WeathersClientResponseError(ex) from ex
         except httpx.HTTPError as ex:
-            raise AviaTicketsClientTransportError(ex) from ex
+            raise WeathersClientTransportError(ex) from ex
         except json.JSONDecodeError as ex:
-            raise AviaTicketsClientResponseError(ex) from ex
+            raise WeathersClientResponseError(ex) from ex
 
         return response
