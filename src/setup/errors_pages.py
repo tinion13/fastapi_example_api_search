@@ -1,6 +1,10 @@
+import logging
+
 from fastapi import Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+
+log = logging.getLogger("global_errors")
 
 
 def setup_error_handlers(app):
@@ -20,6 +24,7 @@ def setup_error_handlers(app):
             "status_code": status.HTTP_422_UNPROCESSABLE_CONTENT,
             "exc_type": "RequestValidationError"
         }
+        log.exception("RequestValidationError")
         return JSONResponse(
             context,
             status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
@@ -40,6 +45,7 @@ def setup_error_handlers(app):
             "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
             "exc_type": "Exception"
         }
+        log.exception("UnHandledException")
         return JSONResponse(
             context,
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

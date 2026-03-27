@@ -1,13 +1,11 @@
 import json
-import logging
 
 import httpx
 
-from clients.base import BaseApiClient
-from exceptions.weathers import WeathersClientResponseError, WeathersClientTransportError
-from schemas.weathers import WeathersSearchInput
+from modules.shared.client import BaseApiClient
+from modules.weathers.exceptions import WeathersClientResponseError, WeathersClientTransportError
+from modules.weathers.schemas import WeathersSearchInput
 
-log = logging.getLogger(__file__)
 
 class WeathersClient(BaseApiClient):
     async def get_result(

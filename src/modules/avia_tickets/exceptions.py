@@ -1,4 +1,4 @@
-from exceptions.base import ClientError, ServiceError
+from modules.shared.exceptions import ClientError, ServiceError
 
 
 class AviaTicketsClientError(ClientError):

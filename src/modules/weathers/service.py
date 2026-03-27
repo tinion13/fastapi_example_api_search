@@ -1,18 +1,18 @@
 import logging
 
 from pydantic import ValidationError
+from shared.utils.common import format_iso_to_str, format_ts_to_str
 
-from clients.weathers import WeathersClient
-from exceptions.weathers import (
+from modules.weathers.client import WeathersClient
+from modules.weathers.exceptions import (
     WeathersClientResponseError,
     WeathersClientTransportError,
     WeathersProviderUnavailable,
     WeathersServiceBadResponseError,
     WeathersServiceValidationError,
 )
-from schemas.weathers import ForecastOutputUser, WeathersNormalizedInput, WeathersOutputUser, WeathersProviderAnswer
-from utils.common import format_iso_to_str, format_ts_to_str
-from utils.weathers import wind_direction_16
+from modules.weathers.schemas import ForecastOutputUser, WeathersNormalizedInput, WeathersOutputUser, WeathersProviderAnswer
+from modules.weathers.utils import wind_direction_16
 
 log = logging.getLogger(__file__)
 

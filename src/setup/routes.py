@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from routers.avia_tickets import router as avia_tickets
-from routers.home import router as home_page
+from modules.avia_tickets.router import router as avia_tickets
+from modules.shared.router import router as home_page
 
 router = APIRouter()
 

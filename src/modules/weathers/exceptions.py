@@ -1,4 +1,4 @@
-from exceptions.base import ClientError, ServiceError
+from shared.exceptions import ClientError, ServiceError
 
 
 class WeathersClientError(ClientError):

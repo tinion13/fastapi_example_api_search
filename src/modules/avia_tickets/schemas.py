@@ -2,7 +2,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, TypeAdapter
 
-from schemas.base import DefisYearMonthOrDateOrNone
+from modules.shared.schemas import DefisYearMonthOrDateOrNone
 
 
 class AviaTicketsSearchInput(BaseModel):

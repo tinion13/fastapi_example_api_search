@@ -4,7 +4,7 @@ from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class Settings(BaseSettings):
+class Secrets(BaseSettings):
     TRAVELPAYOUTS_AVIASALES_TOKEN: SecretStr
     OPENWEATHER_TOKEN: SecretStr
 
@@ -16,5 +16,5 @@ class Settings(BaseSettings):
 
 
 @lru_cache
-def get_settings() -> Settings:
-    return Settings() # pyright: ignore[reportCallIssue]
+def get_secrets() -> Secrets:
+    return Secrets() # pyright: ignore[reportCallIssue]

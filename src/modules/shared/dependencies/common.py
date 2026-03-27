@@ -1,7 +1,7 @@
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 
-from data.data_loader import Data
+from core.reference_data.data_loader import Data
 
 
 async def get_templates(request: Request) -> Jinja2Templates:

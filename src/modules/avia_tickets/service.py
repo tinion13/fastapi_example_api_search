@@ -1,20 +1,16 @@
-import logging
-
 from pydantic import ValidationError
 
-from clients.avia_tickets import AviaTicketsClient
-from data.data_loader import Data
-from exceptions.avia_tickets import (
+from core.reference_data.data_loader import Data
+from modules.avia_tickets.client import AviaTicketsClient
+from modules.avia_tickets.exceptions import (
     AviaTicketsClientResponseError,
     AviaTicketsClientTransportError,
     AviaTicketsProviderUnavailable,
     AviaTicketsServiceBadResponseError,
     AviaTicketsServiceValidationError,
 )
-from schemas.avia_tickets import AviaTicketsProviderAnswer, AviaTicketsSearchInput, Flight
-from utils.common import format_iso_to_str
-
-log = logging.getLogger(__file__)
+from modules.avia_tickets.schemas import AviaTicketsProviderAnswer, AviaTicketsSearchInput, Flight
+from modules.shared.utils.common import format_iso_to_str
 
 
 class AviaTicketsService:

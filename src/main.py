@@ -6,14 +6,19 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from core.errors_pages_setup import setup_error_handlers
-from core.master_router import router as master_router
 from core.paths import STATIC_DIR, TEMPLATES_DIR
-from data.data_loader import load_data
+from core.reference_data.data_loader import load_data
+from core.settings.app_config import AppConfig
+from setup.errors_pages import setup_error_handlers
+from setup.log_config import setup_logging
+from setup.routes import router as root_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    app_cfg = AppConfig.from_sources()
+    setup_logging(app_cfg.logging.level)
+
     app.state.api_client = httpx.AsyncClient(timeout=10)
     app.state.templates = Jinja2Templates(directory=TEMPLATES_DIR)
     app.state.data = load_data()
@@ -21,10 +26,10 @@ async def lifespan(app: FastAPI):
     await app.state.api_client.aclose()
 
 
-app = FastAPI(lifespan=lifespan, title="Tickets Search")
+app = FastAPI(lifespan=lifespan, title="API Search")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 setup_error_handlers(app)
-app.include_router(master_router)
+app.include_router(root_router)
 
 
 if __name__ == "__main__":

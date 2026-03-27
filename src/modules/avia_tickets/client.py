@@ -1,13 +1,11 @@
 import json
-import logging
 
 import httpx
 
-from clients.base import BaseApiClient
-from exceptions.avia_tickets import AviaTicketsClientResponseError, AviaTicketsClientTransportError
-from schemas.avia_tickets import AviaTicketsSearchInput
+from modules.avia_tickets.exceptions import AviaTicketsClientResponseError, AviaTicketsClientTransportError
+from modules.avia_tickets.schemas import AviaTicketsSearchInput
+from modules.shared.client import BaseApiClient
 
-log = logging.getLogger(__file__)
 
 class AviaTicketsClient(BaseApiClient):
     async def get_result(

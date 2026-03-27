@@ -3,8 +3,8 @@ from pathlib import Path
 from pydantic import BaseModel
 
 from core.paths import DATA_JSONS_DIR
-from data.schemas.aircompany import aircompanies_adapter
-from data.schemas.city import CityCodeCoordinates, cities_adapter
+from core.reference_data.schemas.aircompany import aircompanies_adapter
+from core.reference_data.schemas.city import CityCodeCoordinates, cities_adapter
 
 
 class Data(BaseModel):

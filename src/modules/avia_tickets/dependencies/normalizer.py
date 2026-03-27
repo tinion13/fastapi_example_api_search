@@ -1,10 +1,9 @@
 from fastapi import Depends, status
 from fastapi.exceptions import HTTPException
 
-from data.data_loader import Data
-from dependencies.common import get_data
-from schemas.avia_tickets import AviaTicketsSearchInput
-from schemas.weathers import WeathersNormalizedInput, WeathersSearchInput
+from core.reference_data.data_loader import Data
+from modules.avia_tickets.schemas import AviaTicketsSearchInput
+from modules.shared.dependencies.common import get_data
 
 
 async def get_avia_tickets_normalized(
@@ -43,18 +42,3 @@ async def get_avia_tickets_normalized(
         params.destination = iata_name
 
     return params
-
-async def get_weathers_normalized(
-    params: WeathersSearchInput,
-    data: Data = Depends(get_data)
-) -> WeathersNormalizedInput:
-    if params.city not in data.cities:
-        raise HTTPException(
-                status.HTTP_422_UNPROCESSABLE_CONTENT,
-                "Нет информации по такому городу",
-            )
-    coordinates = data.cities[params.city].coordinates
-    return WeathersNormalizedInput(
-        lat=coordinates.lat,
-        lon=coordinates.lon,
-    )
