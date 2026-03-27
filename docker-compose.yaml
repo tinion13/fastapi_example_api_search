@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        INSTALL_DEV: "false"
+    container_name: app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    restart: unless-stopped

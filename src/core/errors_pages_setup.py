@@ -11,7 +11,11 @@ def setup_error_handlers(app):
         exception: RequestValidationError,
     ) -> JSONResponse:
         context = {
-            "request": request,
+            "request": {
+                "method": request.method,
+                "url": str(request.url),
+                "path": request.url.path,
+            },
             "detail": exception.errors(),
             "status_code": status.HTTP_422_UNPROCESSABLE_CONTENT,
             "exc_type": "RequestValidationError"
@@ -27,7 +31,11 @@ def setup_error_handlers(app):
         exception: Exception,
     ) -> JSONResponse:
         context = {
-            "request": request,
+            "request": {
+                "method": request.method,
+                "url": str(request.url),
+                "path": request.url.path,
+            },
             "detail": str(exception),
             "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR,
             "exc_type": "Exception"

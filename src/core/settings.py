@@ -11,8 +11,6 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_prefix="",
         case_sensitive=False,
-
-        env_file=".env"
     )
 
 
