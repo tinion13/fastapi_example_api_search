@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 
 from pydantic import ValidationError
 
@@ -13,6 +12,7 @@ from exceptions.avia_tickets import (
     AviaTicketsServiceValidationError,
 )
 from schemas.avia_tickets import AviaTicketsProviderAnswer, AviaTicketsSearchInput, Flight
+from utils.common import format_iso_to_str
 
 log = logging.getLogger(__file__)
 
@@ -47,7 +47,7 @@ class AviaTicketsService:
             flight.price = f"{flight.price} RUB"
             flight.link = f"https://www.aviasales.ru{flight.link}"
             flight.airline = self._data.aircompanies.get(flight.airline, flight.airline)
-            flight.departure_at = datetime.fromisoformat(flight.departure_at).strftime("%Y.%m.%d %H:%M")
-            flight.return_at = datetime.fromisoformat(flight.return_at).strftime("%Y.%m.%d %H:%M")
+            flight.departure_at = format_iso_to_str(flight.departure_at)
+            flight.return_at = format_iso_to_str(flight.return_at)
 
         return flights

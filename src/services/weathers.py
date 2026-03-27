@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 
 from pydantic import ValidationError
 
@@ -12,7 +11,7 @@ from exceptions.weathers import (
     WeathersServiceValidationError,
 )
 from schemas.weathers import ForecastOutputUser, WeathersNormalizedInput, WeathersOutputUser, WeathersProviderAnswer
-from utils.common import format_ts_to_str
+from utils.common import format_iso_to_str, format_ts_to_str
 from utils.weathers import wind_direction_16
 
 log = logging.getLogger(__file__)
@@ -60,7 +59,7 @@ class WeathersService:
             for forecast in forecasts_raw:
                 output.forecasts.append(
                     ForecastOutputUser(
-                        date=datetime.fromisoformat(forecast.dt_txt).strftime("%Y.%m.%d %H:%M"),
+                        date=format_iso_to_str(forecast.dt_txt),
                         temperature=forecast.main.temp,
                         feels_like=forecast.main.feels_like,
                         pressure=forecast.main.pressure,
