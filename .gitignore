@@ -8,4 +8,5 @@ __pycache__
 temp_*
 test_*
 
+logs
 *.log
